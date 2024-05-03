@@ -1,0 +1,32 @@
+mkdir CPP-whisper
+cd CPP-whisper
+
+python -m venv venv
+venv\Scripts\activate
+
+
+ORIGINAL WHISPER.CPP https://github.com/ggerganov/whisper.cpp
+---
+MODELS already quantized:
+https://huggingface.co/ggerganov/whisper.cpp/tree/main
+https://ggml.ggerganov.com/
+Choose one of ['tiny.en', 'tiny', 'base.en', 'base', 'small.en', 'small', 'medium.en', 'medium', 'large-v1', 'large']
+
+
+https://github.com/jonghwanhyeon/python-ffmpeg/tree/main
+https://python-ffmpeg.readthedocs.io/en/latest/api/
+
+pip install whisper-cpp-pybind  #good for pytho 3.10
+pip install python-ffmpeg
+winget install "FFmpeg (Essentials Build)"
+pip install streamlit==1.34.0
+
+
+wget https://github.com/ggerganov/whisper.cpp/raw/master/samples/jfk.wav -Outfile jfk.wav
+
+
+from https://github.com/sphantix/whisper-cpp-pybind
+pip install whisper-cpp-pybind  #good for pytho 3.10
+---
+Saving models to: C:\Users\FabioMatricardi\.ggml-models
+Downloading ggml-tiny.bin...
