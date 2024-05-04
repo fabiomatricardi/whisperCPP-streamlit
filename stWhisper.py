@@ -6,6 +6,7 @@ import datetime
 import random
 import string
 import datetime
+import time
 
 def genRANstring(n):
     """
@@ -18,7 +19,7 @@ def genRANstring(n):
 
 @st.cache_resource 
 def create_whisper():   
-    whisper = Whisper("models/ggml-small.en-q5_1.bin")
+    whisper = Whisper("models/ggml-tiny.en-q8_0.bin")
     return whisper
 
 @st.cache_resource
@@ -77,7 +78,13 @@ def main():
                 except:
                     pass    
                 print('writing text file out...')
-                result = whisper.output(output_txt=True)
+                result = whisper.output('AITranscribed',output_txt=True,output_srt=True)
+                st.toast('Output files **AITranscribed** saved!', icon='🎉')
+                time.sleep(1.2)
+                st.toast('**text** file saved', icon='📃')
+                time.sleep(1.2)
+                st.toast('**subtitles** file saved', icon='🪩')
+                transcribed.write(result)                
                 transcribed.write(result)
                 print('completed')
 
@@ -90,7 +97,12 @@ def main():
                 st.session_state.gentime = f"**:green[{str(delta)}]**" 
                 gentimetext.write(st.session_state.gentime)
                 message2.success(' Audio transcribed by AI',icon='✅')                
-                result = whisper.output(output_txt=True)
+                result = whisper.output('AITranscribed',output_txt=True,output_srt=True)
+                st.toast('Output files **AITranscribed** saved!', icon='🎉')
+                time.sleep(1.2)
+                st.toast('**text** file saved', icon='📃')
+                time.sleep(1.2)
+                st.toast('**subtitles** file saved', icon='🪩')
                 transcribed.write(result)
                 try:
                     os.remove('temp.wav')
