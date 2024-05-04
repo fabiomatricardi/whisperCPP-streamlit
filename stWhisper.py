@@ -3,19 +3,8 @@ from whisper_cpp import Whisper
 from ffmpeg import FFmpeg
 import os
 import datetime
-import random
-import string
 import datetime
 import time
-
-def genRANstring(n):
-    """
-    n = int number of char to randomize
-    """
-    N = n
-    res = ''.join(random.choices(string.ascii_uppercase +
-                                string.digits, k=N))
-    return res
 
 @st.cache_resource 
 def create_whisper():   
@@ -51,7 +40,7 @@ def main():
     audioplayer = st.empty()
     transcribed = st.empty()
 
-    # Upload the images
+    # Upload the audio file
     file1 = st.sidebar.file_uploader("Upload Audio file", type=["mp3", "wav"],accept_multiple_files=False)
     gentimetext = st.sidebar.empty()
 
@@ -67,7 +56,7 @@ def main():
                 print('Start transcribing...')
                 whisper.transcribe('temp.wav', 
                                 diarize=False,
-                                print_progress=False) #spanish.wav
+                                print_progress=False) 
                 delta = datetime.datetime.now() - start
                 st.session_state.gentime = f"**:green[{str(delta)}]**"
                 gentimetext.write(st.session_state.gentime)
