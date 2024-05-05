@@ -1,0 +1,57 @@
+NEED REGEX To fix issue on TIME FORMAT for SRT
+----------------------------------------------
+
+
+ffmpeg -i karaokeBASE.jpg -i 'What will your verse be.mp3' -vf ass=donesub.ass 'What will your verse be.mp4'
+
+ffmpeg -i karaokeBASE.jpg -i 'What will your verse be.mp3' -vf ass=donesub.ass -c:a copy -c:s mov_text 'What will your verse be.mp4'
+
+ffmpeg -i donesub.srt donesub.ass
+
+ffmpeg -i 'What will your verse be.mp4' -vf subtitles=donesub.srt output_srt.mp4
+
+
+RESOURCES
+https://trac.ffmpeg.org/wiki/HowToBurnSubtitlesIntoVideo
+https://stackoverflow.com/questions/7240247/add-srt-subtitle-to-video-with-ffmpeg
+https://www.baeldung.com/linux/subtitles-ffmpeg
+https://ffmpeg.org/ffmpeg.html#Subtitle-options
+
+
+SRT FORMAT SHUOLD BE
+https://stackoverflow.com/questions/71585253/matching-srt-file-subtitle-line-and-timestamps-with-regex
+```
+1
+00:00:04,700 --> 00:00:05,090
+You know what
+
+2
+00:00:05,100 --> 00:00:05,990
+we should all do.
+```
+
+
+
+TRANSCRBE FROM VIDEO
+
+```
+# Video https://youtube.com/shorts/MNUdPGIjMPw
+# Python 3.10
+# pip install openai-whisper
+# pip install git+https://github.com/openai/whisper.git 
+# install ffmpeg
+# brew install ffmpeg
+import subprocess
+import whisper
+model = whisper.load_model("base")
+
+video_in = 'video.mp4'
+audio_out = 'audio.mp3'
+
+ffmpeg_cmd = f"ffmpeg -i {video_in} -vn -c:a libmp3lame -b:a 192k {audio_out}"
+
+subprocess.run(["ffmpeg", "-i", video_in, "-vn", "-c:a", "libmp3lame", "-b:a", "192k", audio_out])
+
+result = model.transcribe(audio_out)
+print(result["text"])
+```
